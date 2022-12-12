@@ -24,7 +24,7 @@ const Login = ({ setIsLoggedIn }) => {
 
   useEffect(() => {
     changeUserType("admin");
-    fetch("https://pms-apis.herokuapp.com/core/users/")
+    fetch("http://10.100.2.63:9000/core/users/")
       .then((response) => response.json())
       .then((res) => {
         // setUsers(res);
@@ -72,7 +72,7 @@ const Login = ({ setIsLoggedIn }) => {
     onSubmit: (values) => {
       setLoading(true);
       axios
-        .post(`https://pms-apis.herokuapp.com/core/auth/new/login/`, values)
+        .post(`http://10.100.2.63:9000/core/auth/new/login/`, values)
         .then((response) => {
           if (response.status === 200) {
             setLoading(false);

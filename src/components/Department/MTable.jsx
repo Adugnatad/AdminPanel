@@ -187,10 +187,10 @@ const MTable = () => {
     }
   }, [searchTerm, kpis]);
   useEffect(() => {
-    const perspUrl = `https://pms-apis.herokuapp.com/bsc/perspective/${urlKEY}/`;
-    const objUrl = `https://pms-apis.herokuapp.com/bsc/objective/${urlKEY}/`;
+    const perspUrl = `http://10.100.2.63:9000/bsc/perspective/${urlKEY}/`;
+    const objUrl = `http://10.100.2.63:9000/bsc/objective/${urlKEY}/`;
 
-    const kpiUrl = `https://pms-apis.herokuapp.com/bsc/kpi/${urlKEY}/`;
+    const kpiUrl = `http://10.100.2.63:9000/bsc/kpi/${urlKEY}/`;
 
     fetch(perspUrl)
       .then((res) => res.json())
@@ -440,12 +440,12 @@ const MTable = () => {
                 .map((kpi, index) => (
                   <TableRow key={index}>
                     {Dashboardpage === "dept" && (
-                      
-                        <TableCell className={classes.tableCell}>
-                          {kpi.dept_name} Hello
-                        </TableCell>
-                     
-                     )} 
+
+                      <TableCell className={classes.tableCell}>
+                        {kpi.dept_name} Hello
+                      </TableCell>
+
+                    )}
                     {Dashboardpage === "subDept" && (
                       <>
                         <TableCell className={classes.tableCell}>
@@ -534,16 +534,16 @@ const MTable = () => {
                         <TableCell className={classes.tableCell}>
                           {useroles && useroles.length > 0
                             && useroles
-                                .filter((role) => role.role_id === kpi.role)
-                                .map((ro) => ro.role_name)
-                            }
+                              .filter((role) => role.role_id === kpi.role)
+                              .map((ro) => ro.role_name)
+                          }
                         </TableCell>
 
                         <TableCell className={classes.tableCell}>
                           {usedepartments && usedepartments.length > 0
                             ? usedepartments
-                                .filter((dep) => dep.dept_id === kpi.department)
-                                .map((department) => department.dept_name)
+                              .filter((dep) => dep.dept_id === kpi.department)
+                              .map((department) => department.dept_name)
                             : ""}
                         </TableCell>
                         <TableCell className={classes.tableCell}>
@@ -625,21 +625,21 @@ const MTable = () => {
                 ))}
             </TableBody>
             <TableFooter>
-          <TableRow>
-          <TablePagination
-              className={classes.tableCell}
-              count={kpis.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-            </TableRow>
+              <TableRow>
+                <TablePagination
+                  className={classes.tableCell}
+                  count={kpis.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </TableRow>
             </TableFooter>
-          </Table> 
-          
+          </Table>
+
         </TableContainer>
-            
+
       </>
     </div>
   );

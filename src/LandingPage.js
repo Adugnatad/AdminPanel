@@ -53,8 +53,6 @@ const LandingPage = () => {
   const [User, setUser] = useState("select");
   const [userId, setUserId] = useState("");
   const [usersList, setUsersList] = useState([]);
-  const [status, setStatus] = useState("");
-  const url = "https://pms-apis.herokuapp.com";
 
   const HandleDepartmentId = (department) => {
     departments
@@ -205,14 +203,14 @@ const LandingPage = () => {
         .filter((user) =>
           role !== "President"
             ? user.department === departmentId &&
-              user.subdepartment === subdepartmentId &&
-              user.sub_subdepartment === teamDepartmentId &&
-              user.individuals === individualDepartmentId &&
-              user.role === roleId
+            user.subdepartment === subdepartmentId &&
+            user.sub_subdepartment === teamDepartmentId &&
+            user.individuals === individualDepartmentId &&
+            user.role === roleId
             : user.department === departmentId &&
-              user.subdepartment === subdepartmentId &&
-              user.sub_subdepartment === teamDepartmentId &&
-              user.individuals === individualDepartmentId
+            user.subdepartment === subdepartmentId &&
+            user.sub_subdepartment === teamDepartmentId &&
+            user.individuals === individualDepartmentId
         )
         .map((us) => {
           changeUrlKEY(us.id);

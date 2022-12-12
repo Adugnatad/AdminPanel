@@ -76,10 +76,10 @@ const EditDept = () => {
     urlKEY,
   } = useAPI();
   const [url, setUrl] = useState("");
-  const perspUrl = `https://pms-apis.herokuapp.com/bsc/perspective/${urlKEY}/`;
-  const objUrl = `https://pms-apis.herokuapp.com/bsc/objective/${urlKEY}/`;
+  const perspUrl = `http://10.100.2.63:9000/bsc/perspective/${urlKEY}/`;
+  const objUrl = `http://10.100.2.63:9000/bsc/objective/${urlKEY}/`;
 
-  const kpiUrl = `https://pms-apis.herokuapp.com/bsc/kpi/${urlKEY}/`;
+  const kpiUrl = `http://10.100.2.63:9000/bsc/kpi/${urlKEY}/`;
 
   useEffect(() => {
     fetch(perspUrl)
@@ -283,7 +283,7 @@ const EditDept = () => {
         dept_name: department,
       };
       axios
-        .post("https://pms-apis.herokuapp.com/core/department/", dept)
+        .post("http://10.100.2.63:9000/core/department/", dept)
         .then((res) => {
           const data = res.data;
           if (res.status !== 201) {
@@ -311,7 +311,7 @@ const EditDept = () => {
         department: departmentId,
       };
       axios
-        .post("https://pms-apis.herokuapp.com/core/subdepartment/", subDept)
+        .post("http://10.100.2.63:9000/core/subdepartment/", subDept)
         .then((res) => {
           const data = res.data;
           if (res.status !== 201) {
@@ -337,7 +337,7 @@ const EditDept = () => {
         subdepartment: subDepartmentId,
       };
       axios
-        .post("https://pms-apis.herokuapp.com/core/subsub/", teamDept)
+        .post("http://10.100.2.63:9000/core/subsub/", teamDept)
         .then((res) => {
           const data = res.data;
           if (res.status !== 201) {
@@ -363,7 +363,7 @@ const EditDept = () => {
         sub_subdepartment: teamDepartmentId,
       };
       axios
-        .post("https://pms-apis.herokuapp.com/core/individual/", indiDep)
+        .post("http://10.100.2.63:9000/core/individual/", indiDep)
         .then((res) => {
           const data = res.data;
           if (res.status !== 201) {
@@ -389,7 +389,7 @@ const EditDept = () => {
       };
 
       axios
-        .post("https://pms-apis.herokuapp.com/core/role/", role)
+        .post("http://10.100.2.63:9000/core/role/", role)
         .then((res) => {
           const data = res.data;
           if (res.status !== 201) {
@@ -423,7 +423,7 @@ const EditDept = () => {
       };
       console.log(user);
       axios
-        .post("https://pms-apis.herokuapp.com/core/auth/register/", user)
+        .post("http://10.100.2.63:9000/core/auth/register/", user)
         .then((res) => {
           const data = res.data;
           if (res.status !== 201) {
@@ -457,7 +457,7 @@ const EditDept = () => {
       console.log(persp);
       axios
         .post(
-          `https://pms-apis.herokuapp.com/bsc/perspective/${urlKEY}/`,
+          `http://10.100.2.63:9000/bsc/perspective/${urlKEY}/`,
           persp
         )
         .then((res) => {
@@ -490,7 +490,7 @@ const EditDept = () => {
       console.log(objects);
       axios
         .post(
-          `https://pms-apis.herokuapp.com/bsc/objective/${urlKEY}/`,
+          `http://10.100.2.63:9000/bsc/objective/${urlKEY}/`,
           objects
         )
         .then((res) => {
@@ -567,7 +567,7 @@ const EditDept = () => {
       };
       axios
         .put(
-          `https://pms-apis.herokuapp.com/core/department/${kpis[index].dept_id}/`,
+          `http://10.100.2.63:9000/core/department/${kpis[index].dept_id}/`,
           dept
         )
         .then((res) => {
@@ -599,7 +599,7 @@ const EditDept = () => {
       };
       axios
         .put(
-          `https://pms-apis.herokuapp.com/core/subdepartment_detail/${kpis[index].id}/`,
+          `http://10.100.2.63:9000/core/subdepartment_detail/${kpis[index].id}/`,
           subDept
         )
         .then((res) => {
@@ -631,7 +631,7 @@ const EditDept = () => {
       };
       axios
         .put(
-          `https://pms-apis.herokuapp.com/core/subsub/${kpis[index].id}/`,
+          `http://10.100.2.63:9000/core/subsub/${kpis[index].id}/`,
           teamDept
         )
         .then((res) => {
@@ -663,7 +663,7 @@ const EditDept = () => {
       };
       axios
         .put(
-          `https://pms-apis.herokuapp.com/core/individual/${kpis[index].id}/`,
+          `http://10.100.2.63:9000/core/individual/${kpis[index].id}/`,
           indiDep
         )
         .then((res) => {
@@ -696,7 +696,7 @@ const EditDept = () => {
       };
       axios
         .put(
-          `https://pms-apis.herokuapp.com/core/role_detail/${kpis[index].role_id}/`,
+          `http://10.100.2.63:9000/core/role_detail/${kpis[index].role_id}/`,
           role
         )
         .then((res) => {
@@ -735,7 +735,7 @@ const EditDept = () => {
       console.log(user);
       axios
         .put(
-          `https://pms-apis.herokuapp.com/core/user/${kpis[index].id}/`,
+          `http://10.100.2.63:9000/core/user/${kpis[index].id}/`,
           user
         )
         .then((res) => {
@@ -772,7 +772,7 @@ const EditDept = () => {
       console.log(persp);
       axios
         .put(
-          `https://pms-apis.herokuapp.com/bsc/perspective/${kpis[index].perspective_id}/`,
+          `http://10.100.2.63:9000/bsc/perspective/${kpis[index].perspective_id}/`,
           persp
         )
         .then((res) => {
@@ -803,7 +803,7 @@ const EditDept = () => {
       console.log(obj);
       axios
         .put(
-          `https://pms-apis.herokuapp.com/bsc/objective/${kpis[index].objective_id}/`,
+          `http://10.100.2.63:9000/bsc/objective/${kpis[index].objective_id}/`,
           obj
         )
         .then((res) => {
@@ -842,7 +842,7 @@ const EditDept = () => {
       console.log(kpi);
       axios
         .put(
-          `https://pms-apis.herokuapp.com/bsc/kpi/${kpis[index].kpi_id}/`,
+          `http://10.100.2.63:9000/bsc/kpi/${kpis[index].kpi_id}/`,
           kpi
         )
         .then((res) => {
@@ -1039,51 +1039,51 @@ const EditDept = () => {
         {pageType !== "ADD" && DashboardPage === "dept"
           ? "Edit Process"
           : DashboardPage === "dept"
-          ? "Add Process"
-          : null}
+            ? "Add Process"
+            : null}
         {pageType !== "ADD" && DashboardPage === "subDept"
           ? "Edit Sub-Process"
           : DashboardPage === "subDept"
-          ? "Add Sub-Process"
-          : null}
+            ? "Add Sub-Process"
+            : null}
         {pageType !== "ADD" && DashboardPage === "sub-subDept"
           ? "Edit Head Office Team / Branch"
           : DashboardPage === "sub-subDept"
-          ? "Add Head Office Team / Branch"
-          : null}
+            ? "Add Head Office Team / Branch"
+            : null}
         {pageType !== "ADD" && DashboardPage === "individualDep"
           ? "Edit Position"
           : DashboardPage === "individualDep"
-          ? "Add Position"
-          : null}
+            ? "Add Position"
+            : null}
         {pageType !== "ADD" && DashboardPage === "user"
           ? "Edit User"
           : DashboardPage === "user"
-          ? "Add User"
-          : null}
+            ? "Add User"
+            : null}
         {pageType !== "ADD" && DashboardPage === "role"
           ? "Edit Role"
           : DashboardPage === "role"
-          ? "Add Role"
-          : null}
+            ? "Add Role"
+            : null}
         {pageType !== "ADD" && DashboardPage === "obj"
           ? "Edit Objective"
           : DashboardPage === "obj"
-          ? "Add Objective"
-          : null}
+            ? "Add Objective"
+            : null}
         {pageType !== "ADD" && DashboardPage === "persp"
           ? "Edit Perspective"
           : DashboardPage === "persp"
-          ? "Add Perspective"
-          : null}
+            ? "Add Perspective"
+            : null}
 
-          <div>
-        {pageType !== "ADD" && DashboardPage === "kpi"
-          ? "Edit KPI"
-          : DashboardPage === "kpi"
-          ? "Add KPI"
-          : null}
-          </div>
+        <div>
+          {pageType !== "ADD" && DashboardPage === "kpi"
+            ? "Edit KPI"
+            : DashboardPage === "kpi"
+              ? "Add KPI"
+              : null}
+        </div>
       </div>
 
       <div className="InputContainer">

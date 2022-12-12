@@ -26,7 +26,7 @@ const Dashboard = () => {
   const Bsc = ["Perspective", "Objective", "KPIs"];
 
   useEffect(() => {
-    fetch("https://pms-apis.herokuapp.com/core/department/")
+    fetch("http://10.100.2.63:9000/core/department/")
       .then((response) => response.json())
       .then((res) => {
         changeDepartments(res);
@@ -34,7 +34,7 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
-    fetch("https://pms-apis.herokuapp.com/core/subdepartment/")
+    fetch("http://10.100.2.63:9000/core/subdepartment/")
       .then((response) => response.json())
       .then((res) => {
         changeSubDepartments(res);
@@ -42,7 +42,7 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
-    fetch("https://pms-apis.herokuapp.com/core/subsub/")
+    fetch("http://10.100.2.63:9000/core/subsub/")
       .then((response) => response.json())
       .then((res) => {
         changeTeamDepartments(res);
@@ -50,7 +50,7 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
-    fetch("https://pms-apis.herokuapp.com/core/individual/")
+    fetch("http://10.100.2.63:9000/core/individual/")
       .then((response) => response.json())
       .then((res) => {
         changeIndividualDepartments(res);
@@ -58,7 +58,7 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
-    fetch("https://pms-apis.herokuapp.com/core/role/")
+    fetch("http://10.100.2.63:9000/core/role/")
       .then((response) => response.json())
       .then((res) => {
         changeRoles(res);
@@ -66,7 +66,7 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
-    fetch("https://pms-apis.herokuapp.com/core/users/")
+    fetch("http://10.100.2.63:9000/core/users/")
       .then((response) => response.json())
       .then((res) => {
         changeUsers(res);
@@ -112,7 +112,7 @@ const Dashboard = () => {
 
   return (
     <main className={styles.container}>
-    <div className="breadcrumps">
+      <div className="breadcrumps">
         <IconBreadcrumbs />
       </div>
       <ProfileHeader />
