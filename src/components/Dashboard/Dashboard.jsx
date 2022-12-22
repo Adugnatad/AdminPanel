@@ -26,7 +26,7 @@ const Dashboard = () => {
   const Bsc = ["Perspective", "Objective", "KPIs"];
 
   useEffect(() => {
-    fetch("http://10.100.2.63:9000/core/department/")
+    fetch("http://10.100.2.63:5003/core/department/")
       .then((response) => response.json())
       .then((res) => {
         changeDepartments(res);
@@ -34,7 +34,7 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
-    fetch("http://10.100.2.63:9000/core/subdepartment/")
+    fetch("http://10.100.2.63:5003/core/subdepartment/")
       .then((response) => response.json())
       .then((res) => {
         changeSubDepartments(res);
@@ -42,7 +42,7 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
-    fetch("http://10.100.2.63:9000/core/subsub/")
+    fetch("http://10.100.2.63:5003/core/subsub/")
       .then((response) => response.json())
       .then((res) => {
         changeTeamDepartments(res);
@@ -50,7 +50,7 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
-    fetch("http://10.100.2.63:9000/core/individual/")
+    fetch("http://10.100.2.63:5003/core/individual/")
       .then((response) => response.json())
       .then((res) => {
         changeIndividualDepartments(res);
@@ -58,7 +58,7 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
-    fetch("http://10.100.2.63:9000/core/role/")
+    fetch("http://10.100.2.63:5003/core/role/")
       .then((response) => response.json())
       .then((res) => {
         changeRoles(res);
@@ -66,7 +66,7 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
-    fetch("http://10.100.2.63:9000/core/users/")
+    fetch("http://10.100.2.63:5003/core/users/")
       .then((response) => response.json())
       .then((res) => {
         changeUsers(res);

@@ -65,9 +65,6 @@ const MTable = () => {
   const [perspectives, setPerspective] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const {
-    userType,
-    useDepartment,
-    useSubDepartment,
     usedepartments,
     useSubDepartments,
     useTeamDepartments,
@@ -75,6 +72,8 @@ const MTable = () => {
     useroles,
     useUsers,
     urlKEY,
+    changePerspectives,
+    changeObjectives,
   } = useAPI();
   const [loading, setLoading] = useState(true);
 
@@ -187,10 +186,10 @@ const MTable = () => {
     }
   }, [searchTerm, kpis]);
   useEffect(() => {
-    const perspUrl = `http://10.100.2.63:9000/bsc/perspective/${urlKEY}/`;
-    const objUrl = `http://10.100.2.63:9000/bsc/objective/${urlKEY}/`;
+    const perspUrl = `http://10.100.2.63:5003/bsc/perspective/${urlKEY}/`;
+    const objUrl = `http://10.100.2.63:5003/bsc/objective/${urlKEY}/`;
 
-    const kpiUrl = `http://10.100.2.63:9000/bsc/kpi/${urlKEY}/`;
+    const kpiUrl = `http://10.100.2.63:5003/bsc/kpi/${urlKEY}/`;
 
     fetch(perspUrl)
       .then((res) => res.json())
@@ -225,6 +224,7 @@ const MTable = () => {
         .then((res) => res.json())
         .then((result) => {
           setKpis(result);
+          changePerspectives(result);
           perspectives !== [] && setLoading(false);
         })
         .catch((error) => {
@@ -236,6 +236,7 @@ const MTable = () => {
         .then((res) => res.json())
         .then((result) => {
           setKpis(result);
+          changeObjectives(result);
           perspectives !== [] && setLoading(false);
         })
         .catch((error) => {
