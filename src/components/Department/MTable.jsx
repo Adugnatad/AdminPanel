@@ -109,14 +109,16 @@ const MTable = () => {
       .delete(`http://10.1.177.61:5003/bsc/kpi/${id}/`)
       .then((res) => {
         const data = res.data;
-        if (res.status !== 200) {
+        if (res.status !== 204) {
           console.log(data);
           const error = (data && data.message) || res.status;
           return Promise.reject(error);
         }
-        setDeleted(!deleted);
         toast.success("Kpi is deleted!", {
           position: toast.POSITION.TOP_RIGHT,
+          onClose: () => {
+            setDeleted(!deleted);
+          }
         });
         console.log(data);
         // updateKpi(dept_id, { dept_id, dept_name });
@@ -663,7 +665,7 @@ const MTable = () => {
       </>
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
