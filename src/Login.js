@@ -18,13 +18,13 @@ const SlideInLeft = styled.div`
   animation: 2s ${keyframes`${fadeIn}`};
 `;
 
-const Login = ({ setIsLoggedIn }) => {
+const Login = () => {
   let navigate = useNavigate();
-  const { changeUrlKEY, changeUserType, changeNavBarUser } = useAPI();
+  const { changeUrlKEY, changeUserType, changeNavBarUser, changeIsLoggedIn } = useAPI();
 
   useEffect(() => {
     changeUserType("admin");
-    fetch("http://10.100.2.63:5003/core/users/")
+    fetch("http://10.1.177.61:5003/core/users/")
       .then((response) => response.json())
       .then((res) => {
         // setUsers(res);
@@ -72,11 +72,11 @@ const Login = ({ setIsLoggedIn }) => {
     onSubmit: (values) => {
       setLoading(true);
       axios
-        .post(`http://10.100.2.63:5003/core/auth/new/login/`, values)
+        .post(`http://10.1.177.61:5003/core/auth/new/login/`, values)
         .then((response) => {
           if (response.status === 200) {
             setLoading(false);
-            setIsLoggedIn(true);
+            changeIsLoggedIn(true);
             changeNavBarUser("admin");
             navigate(`/dashboard`);
           }

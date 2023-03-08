@@ -10,6 +10,9 @@ import { useAPI } from "../../Context/APIContext";
 import loader from "../../resources/images/loader.gif";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { ToastContainer, toast } from "react-toastify/dist/react-toastify";
+import axios from "axios";
 import {
   Table,
   TableBody,
@@ -64,6 +67,7 @@ const MTable = () => {
   const [barClicked, setBarClicked] = useState(false);
   const [perspectives, setPerspective] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [deleted, setDeleted] = useState(null);
   const {
     usedepartments,
     useSubDepartments,
@@ -95,24 +99,35 @@ const MTable = () => {
         dashboardPage: Dashboardpage,
         perspectives: perspectives,
         index: index,
-        kpi: kpis,
+        kpi: filteredKpis,
       },
     });
   };
 
-  const handleDelete = () => {
-    // fetch(`https://bsc-newapi.herokuapp.com/core/department/`)
-    //   .then((res) => {
-    //     const data = res.json();
-    //     if (!res.ok) {
-    //       const error = (data && data.message) || res.status;
-    //       return Promise.reject(error);
-    //     }
-    //     alert("Delete Successful");
-    //   })
-    //   .catch((error) => {
-    //     alert("There was an error!", error);
-    //   });
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://10.1.177.61:5003/bsc/kpi/${id}/`)
+      .then((res) => {
+        const data = res.data;
+        if (res.status !== 200) {
+          console.log(data);
+          const error = (data && data.message) || res.status;
+          return Promise.reject(error);
+        }
+        setDeleted(!deleted);
+        toast.success("Kpi is deleted!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        console.log(data);
+        // updateKpi(dept_id, { dept_id, dept_name });
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("delete failed!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      });
+
   };
   const handleAdd = () => {
     let path = "/Edit";
@@ -186,10 +201,10 @@ const MTable = () => {
     }
   }, [searchTerm, kpis]);
   useEffect(() => {
-    const perspUrl = `http://10.100.2.63:5003/bsc/perspective/${urlKEY}/`;
-    const objUrl = `http://10.100.2.63:5003/bsc/objective/${urlKEY}/`;
+    const perspUrl = `http://10.1.177.61:5003/bsc/perspective/${urlKEY}/`;
+    const objUrl = `http://10.1.177.61:5003/bsc/objective/${urlKEY}/`;
 
-    const kpiUrl = `http://10.100.2.63:5003/bsc/kpi/${urlKEY}/`;
+    const kpiUrl = `http://10.1.177.61:5003/bsc/kpi/${urlKEY}/`;
 
     fetch(perspUrl)
       .then((res) => res.json())
@@ -254,7 +269,7 @@ const MTable = () => {
           console.log(error);
         });
     }
-  }, [Dashboardpage]);
+  }, [Dashboardpage, deleted]);
 
   const handleLinkClick = (path, page) => {
     navigate(path, { state: { page: page } });
@@ -269,12 +284,6 @@ const MTable = () => {
     </div>
   ) : (
     <div className="Table">
-      {/* <div className="Clickbar">
-        <i
-          onClick={handleBarClick}
-          className={barClicked ? "fas fa-times" : "fas fa-bars"}
-        ></i>
-      </div> */}
       <div className="search-header">
         <input
           type="text"
@@ -429,7 +438,7 @@ const MTable = () => {
                   <TableCell className={classes.tableHeaderCell}>
                     KPI Unit of Measurement
                   </TableCell>
-                  <TableCell className={classes.tableHeaderCell}>
+                  <TableCell colSpan={2} className={classes.tableHeaderCell}>
                     Manage
                   </TableCell>
                 </TableRow>
@@ -510,7 +519,8 @@ const MTable = () => {
                           {kpi.perspective_name}
                         </TableCell>
                         <TableCell className={classes.tableCell}>
-                          {parseFloat(kpi.perspective_weight) * 100}
+                          {(parseFloat(kpi.perspective_weight) * 100) % 1 !== 0 ? (parseFloat(kpi.perspective_weight) * 100)?.toFixed(3) : (parseFloat(kpi.perspective_weight) * 100)}
+
                         </TableCell>
                         {/* <TableCell className={classes.tableCell}>
                           {useUsers &&
@@ -583,7 +593,7 @@ const MTable = () => {
                           {kpi.objective_name}
                         </TableCell>
                         <TableCell className={classes.tableCell}>
-                          {parseFloat(kpi.objective_weight) * 100}
+                          {(parseFloat(kpi.objective_weight) * 100) % 1 !== 0 ? (parseFloat(kpi.objective_weight) * 100)?.toFixed(3) : (parseFloat(kpi.objective_weight) * 100)}
                         </TableCell>
                         <TableCell className={classes.tableCell} key={index}>
                           {perspectives &&
@@ -607,8 +617,8 @@ const MTable = () => {
                         </TableCell>
                         <TableCell className={classes.tableCell}>
                           {kpi.kpi_unit_measurement === "Percentage"
-                            ? parseFloat(kpi.kpi_target) * 100
-                            : kpi.kpi_target}
+                            ? (parseFloat(kpi.kpi_target) * 100) % 1 !== 0 ? (parseFloat(kpi.kpi_target) * 100)?.toFixed(3) : (parseFloat(kpi.kpi_target) * 100)
+                            : (kpi.kpi_target) % 1 !== 0 ? (kpi.kpi_target)?.toFixed(3) : (kpi.kpi_target)}
                         </TableCell>
                         <TableCell className={classes.tableCell}>
                           {kpi.kpi_unit_measurement}
@@ -621,6 +631,15 @@ const MTable = () => {
                         onClick={() => editPage(page * rowsPerPage + index)}>
                         <ModeEditOutlinedIcon />
                       </button>
+                    </TableCell>
+                    <TableCell className={classes.tableCell}>
+                      {Dashboardpage === "kpi" && (
+                        <button
+                          className="btn edit"
+                          onClick={() => { handleDelete(kpi.kpi_id) }}>
+                          <DeleteForeverIcon />
+                        </button>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -642,6 +661,17 @@ const MTable = () => {
         </TableContainer>
 
       </>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

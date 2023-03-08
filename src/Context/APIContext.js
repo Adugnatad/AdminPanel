@@ -17,6 +17,11 @@ export function APIContextProvider({ children }) {
   const [useObjectives, setObjectives] = useState([]);
   const [urlKEY, setUrlKEY] = useState("");
   const [NavBarUser, setNavBarUser] = useState("admin");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const changeIsLoggedIn = () => {
+    setIsLoggedIn(true);
+  }
   const changeUserType = (user) => {
     setUserType(user);
   };
@@ -184,9 +189,16 @@ export function APIContextProvider({ children }) {
       },
     ]);
   };
+
+  const updateUsers = (id, updatedUsers) => {
+    setUsers(
+      useUsers.map((user) => (user.id === id ? updatedUsers : user))
+    );
+  };
   return (
     <APIContext.Provider
       value={{
+        isLoggedIn,
         useDepartment,
         useSubDepartment,
         useTeamDepartment,
@@ -202,6 +214,7 @@ export function APIContextProvider({ children }) {
         useObjectives,
         urlKEY,
         NavBarUser,
+        changeIsLoggedIn,
         changeUserType,
         changeDepartment,
         changeSubDepartment,
@@ -228,6 +241,7 @@ export function APIContextProvider({ children }) {
         updateTeamDepartment,
         updateIndividualDepartment,
         updateRoles,
+        updateUsers
       }}
     >
       {children}

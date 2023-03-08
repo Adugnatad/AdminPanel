@@ -5,7 +5,7 @@ import Link from '@mui/material/Link';
 import HomeIcon from '@mui/icons-material/Home';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import GrainIcon from '@mui/icons-material/Grain';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Box } from '@mui/system';
 import { useAPI } from "../../Context/APIContext";
@@ -14,12 +14,12 @@ import { useAPI } from "../../Context/APIContext";
 export default function IconBreadcrumbs() {
   let navigate = useNavigate();
   const { NavBarUser } = useAPI();
-function handleClick(path) {
-  
-  navigate(path);
-}
+  function handleClick(path) {
 
-const CustomLink = styled(Link)`
+    navigate(path);
+  }
+
+  const CustomLink = styled(Link)`
   display: flex;
   align-items: center;
     :hover {
@@ -33,16 +33,16 @@ const CustomLink = styled(Link)`
   return (
     <div role="presentation">
       <Breadcrumbs separator="›" aria-label="breadcrumb">
-      
+
         <CustomLink
-          onClick={() =>handleClick('/dashboard')}
+          onClick={() => handleClick('/dashboard')}
         >
           <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
           Home
         </CustomLink>
-        
+
         <CustomLink
-         onClick={() =>handleClick('/landing')}
+          onClick={() => handleClick('/landing')}
         >
           <WhatshotIcon sx={{ mr: 0.5 }} fontSize="inherit" />
           User

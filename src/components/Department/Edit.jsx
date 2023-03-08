@@ -66,20 +66,22 @@ const EditDept = () => {
     addTeamDepartment,
     addIndividualDepartment,
     addRoles,
+    addUsers,
     updateDepartment,
     updateSubDepartment,
     updateTeamDepartment,
     updateIndividualDepartment,
     updateRoles,
+    updateUsers,
     urlKEY,
   } = useAPI();
   const [url, setUrl] = useState("");
-  const perspUrl = `http://10.100.2.63:5003/bsc/perspective/${urlKEY}/`;
-  const objUrl = `http://10.100.2.63:5003/bsc/objective/${urlKEY}/`;
+  const perspUrl = `http://10.1.177.61:5003/bsc/perspective/${urlKEY}/`;
+  const objUrl = `http://10.1.177.61:5003/bsc/objective/${urlKEY}/`;
 
-  const kpiUrl = `http://10.100.2.63:5003/bsc/kpi/${urlKEY}/`;
-  const [perspectiveExists, setPerspectiveExists] = useState(false);
-  const [objExists, setObjExists] = useState(false);
+  const kpiUrl = `http://10.1.177.61:5003/bsc/kpi/${urlKEY}/`;
+  // const [perspectiveExists, setPerspectiveExists] = useState(false);
+  // const [objExists, setObjExists] = useState(false);
 
   useEffect(() => {
     fetch(perspUrl)
@@ -240,28 +242,28 @@ const EditDept = () => {
       setKpiQ1Target(
         index !== ""
           ? kpis[index].kpi_unit_measurement === "Percentage"
-            ? parseFloat(kpis[index].kpi_q1) * 100
+            ? parseFloat(kpis[index].kpi_q1)
             : kpis[index].kpi_q1
           : ""
       );
       setKpiQ2Target(
         index !== ""
           ? kpis[index].kpi_unit_measurement === "Percentage"
-            ? parseFloat(kpis[index].kpi_q2) * 100
+            ? parseFloat(kpis[index].kpi_q2)
             : kpis[index].kpi_q2
           : ""
       );
       setKpiQ3Target(
         index !== ""
           ? kpis[index].kpi_unit_measurement === "Percentage"
-            ? parseFloat(kpis[index].kpi_q3) * 100
+            ? parseFloat(kpis[index].kpi_q3)
             : kpis[index].kpi_q3
           : ""
       );
       setKpiQ4Target(
         index !== ""
           ? kpis[index].kpi_unit_measurement === "Percentage"
-            ? parseFloat(kpis[index].kpi_q4) * 100
+            ? parseFloat(kpis[index].kpi_q4)
             : kpis[index].kpi_q4
           : ""
       );
@@ -278,24 +280,24 @@ const EditDept = () => {
     }
   }, []);
 
-  useEffect(() => {
-    setPerspectiveExists(false);
-    usePerspectives.map((perspectives) => {
-      if (perspectives.perspective_name === perspective) {
-        setPerspectiveExists(true);
-      }
-    })
-  }, [perspective])
+  // useEffect(() => {
+  //   setPerspectiveExists(false);
+  //   usePerspectives.map((perspectives) => {
+  //     if (perspectives.perspective_name === perspective) {
+  //       setPerspectiveExists(true);
+  //     }
+  //   })
+  // }, [perspective])
 
 
-  useEffect(() => {
-    setObjExists(false);
-    useObjectives.map((objec) => {
-      if (objec.objective_name === objective) {
-        setObjExists(true);
-      }
-    })
-  }, [objective])
+  // useEffect(() => {
+  //   setObjExists(false);
+  //   useObjectives.map((objec) => {
+  //     if (objec.objective_name === objective) {
+  //       setObjExists(true);
+  //     }
+  //   })
+  // }, [objective])
 
 
   const handleAdd = () => {
@@ -304,7 +306,7 @@ const EditDept = () => {
         dept_name: department,
       };
       axios
-        .post("http://10.100.2.63:5003/core/department/", dept)
+        .post("http://10.1.177.61:5003/core/department/", dept)
         .then((res) => {
           const data = res.data;
           if (res.status !== 201) {
@@ -332,7 +334,7 @@ const EditDept = () => {
         department: departmentId,
       };
       axios
-        .post("http://10.100.2.63:5003/core/subdepartment/", subDept)
+        .post("http://10.1.177.61:5003/core/subdepartment/", subDept)
         .then((res) => {
           const data = res.data;
           if (res.status !== 201) {
@@ -358,7 +360,7 @@ const EditDept = () => {
         subdepartment: subDepartmentId,
       };
       axios
-        .post("http://10.100.2.63:5003/core/subsub/", teamDept)
+        .post("http://10.1.177.61:5003/core/subsub/", teamDept)
         .then((res) => {
           const data = res.data;
           if (res.status !== 201) {
@@ -384,7 +386,7 @@ const EditDept = () => {
         sub_subdepartment: teamDepartmentId,
       };
       axios
-        .post("http://10.100.2.63:5003/core/individual/", indiDep)
+        .post("http://10.1.177.61:5003/core/individual/", indiDep)
         .then((res) => {
           const data = res.data;
           if (res.status !== 201) {
@@ -410,7 +412,7 @@ const EditDept = () => {
       };
 
       axios
-        .post("http://10.100.2.63:5003/core/role/", role)
+        .post("http://10.1.177.61:5003/core/role/", role)
         .then((res) => {
           const data = res.data;
           if (res.status !== 201) {
@@ -444,7 +446,7 @@ const EditDept = () => {
       };
       console.log(user);
       axios
-        .post("http://10.100.2.63:5003/core/auth/register/", user)
+        .post("http://10.1.177.61:5003/core/auth/register/", user)
         .then((res) => {
           const data = res.data;
           if (res.status !== 201) {
@@ -461,12 +463,17 @@ const EditDept = () => {
           setIndividualDepartment("");
           HandleSuccess("User");
           console.log(data);
+          addUsers(data.user.id, data.user.first_name, data.user.last_name, data.user.username, data.user.role, data.user.department, data.user.subdepartment, data.user.sub_subdepartment, data.user.is_active);
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
             HandleError("network");
           } else {
-            HandleError("details");
+            if (error.response.data.password) {
+              HandleError("Password");
+            } else {
+              HandleError("details");
+            }
           }
         });
     } else if (DashboardPage === "persp") {
@@ -477,13 +484,14 @@ const EditDept = () => {
       };
       console.log(persp);
 
-      if (perspectiveExists) {
-        HandleError("duplicate");
-      }
+      // if (perspectiveExists) {
+      //   HandleError("duplicate");
+      // }
       {
-        !perspectiveExists && axios
+        // !perspectiveExists && axios
+        axios
           .post(
-            `http://10.100.2.63:5003/bsc/perspective/${urlKEY}/`,
+            `http://10.1.177.61:5003/bsc/perspective/${urlKEY}/`,
             persp
           )
           .then((res) => {
@@ -515,14 +523,15 @@ const EditDept = () => {
         user: userId,
       };
       console.log(objects);
-      if (objExists) {
-        HandleError("duplicate");
-      }
+      // if (objExists) {
+      //   HandleError("duplicate");
+      // }
 
       {
-        !objExists && axios
+        // !objExists && axios
+        axios
           .post(
-            `http://10.100.2.63:5003/bsc/objective/${urlKEY}/`,
+            `http://10.1.177.61:5003/bsc/objective/${urlKEY}/`,
             objects
           )
           .then((res) => {
@@ -600,7 +609,7 @@ const EditDept = () => {
       };
       axios
         .put(
-          `http://10.100.2.63:5003/core/department/${kpis[index].dept_id}/`,
+          `http://10.1.177.61:5003/core/department/${kpis[index].dept_id}/`,
           dept
         )
         .then((res) => {
@@ -632,7 +641,7 @@ const EditDept = () => {
       };
       axios
         .put(
-          `http://10.100.2.63:5003/core/subdepartment_detail/${kpis[index].id}/`,
+          `http://10.1.177.61:5003/core/subdepartment_detail/${kpis[index].id}/`,
           subDept
         )
         .then((res) => {
@@ -664,7 +673,7 @@ const EditDept = () => {
       };
       axios
         .put(
-          `http://10.100.2.63:5003/core/subsub/${kpis[index].id}/`,
+          `http://10.1.177.61:5003/core/subsub/${kpis[index].id}/`,
           teamDept
         )
         .then((res) => {
@@ -696,7 +705,7 @@ const EditDept = () => {
       };
       axios
         .put(
-          `http://10.100.2.63:5003/core/individual/${kpis[index].id}/`,
+          `http://10.1.177.61:5003/core/individual/${kpis[index].id}/`,
           indiDep
         )
         .then((res) => {
@@ -729,7 +738,7 @@ const EditDept = () => {
       };
       axios
         .put(
-          `http://10.100.2.63:5003/core/role_detail/${kpis[index].role_id}/`,
+          `http://10.1.177.61:5003/core/role_detail/${kpis[index].role_id}/`,
           role
         )
         .then((res) => {
@@ -768,7 +777,7 @@ const EditDept = () => {
       console.log(user);
       axios
         .put(
-          `http://10.100.2.63:5003/core/user/${kpis[index].id}/`,
+          `http://10.1.177.61:5003/core/user/${kpis[index].id}/`,
           user
         )
         .then((res) => {
@@ -788,8 +797,19 @@ const EditDept = () => {
           setIndividualDepartment("");
           console.log(res);
           HandleSuccessUpdate("User");
+          const id = data.id;
+          const first_name = data.first_name;
+          const last_name = data.last_name;
+          const username = data.username;
+          const role = data.role;
+          const department = data.department;
+          const subdepartment = data.subdepartment;
+          const sub_subdepartment = data.sub_subdepartment;
+          const is_active = data.is_active;
+          updateUsers(id, { id, first_name, last_name, username, role, department, subdepartment, sub_subdepartment, is_active })
         })
         .catch((error) => {
+          console.log(error);
           if (error.code === "ERR_NETWORK") {
             HandleError("network");
           } else {
@@ -802,13 +822,14 @@ const EditDept = () => {
         perspective_weight: perspectiveWeight,
         user: userId,
       };
-      if (perspectiveExists) {
-        HandleError("duplicate");
-      }
+      // if (perspectiveExists) {
+      //   HandleError("duplicate");
+      // }
       {
-        !perspectiveExists && axios
+        // !perspectiveExists && axios
+        axios
           .put(
-            `http://10.100.2.63:5003/bsc/perspective/${kpis[index].perspective_id}/`,
+            `http://10.1.177.61:5003/bsc/perspective/${kpis[index].perspective_id}/`,
             persp
           )
           .then((res) => {
@@ -837,14 +858,15 @@ const EditDept = () => {
         perspective: ceoPerspectiveId,
         user: userId,
       };
-      if (objExists) {
-        HandleError("duplicate");
-      }
+      // if (objExists) {
+      //   HandleError("duplicate");
+      // }
 
       {
-        !objExists && axios
+        // !objExists && axios
+        axios
           .put(
-            `http://10.100.2.63:5003/bsc/objective/${kpis[index].objective_id}/`,
+            `http://10.1.177.61:5003/bsc/objective/${kpis[index].objective_id}/`,
             obj
           )
           .then((res) => {
@@ -884,7 +906,7 @@ const EditDept = () => {
       console.log(kpi);
       axios
         .put(
-          `http://10.100.2.63:5003/bsc/kpi/${kpis[index].kpi_id}/`,
+          `http://10.1.177.61:5003/bsc/kpi/${kpis[index].kpi_id}/`,
           kpi
         )
         .then((res) => {
@@ -944,6 +966,10 @@ const EditDept = () => {
     }
     else if (type === "duplicate") {
       toast.error("Already exists", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else if (type === "Password") {
+      toast.error("Password must be atleast 8 characters", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }

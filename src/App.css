@@ -23,6 +23,7 @@ body {
 .App {
   display: flex;
 }
+
 .Table {
   display: flex;
   position: relative;
@@ -30,10 +31,12 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
 .Clickbar {
   align-self: flex-start;
   cursor: pointer;
 }
+
 .Table div i {
   margin: 10px;
   /* margin-top: 30px; */
@@ -43,14 +46,17 @@ body {
   padding: 5px;
   text-align: center;
 }
+
 .addBtn {
   display: flex;
   flex-direction: row;
 }
+
 .btn {
-  margin: 10px 10px;
+  margin: 10px 0;
   color: #fff;
 }
+
 .btn.edit {
   border-radius: 50%;
   height: 35px;
@@ -59,11 +65,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .btn.edit:hover {
   color: yellow;
 }
+
 .add {
   margin: 20px 30px;
   padding: 5px;
@@ -78,10 +86,12 @@ body {
   color: #fff;
   background-color: #303f9f;
 }
+
 .add:hover {
   background-color: #efefef;
   color: #242424;
 }
+
 .Container {
   display: flex;
   flex: 1;
@@ -93,12 +103,14 @@ body {
   background-color: #304b62;
   color: #fff;
 }
+
 .header {
   margin-top: 50px 0;
   font-size: 2rem;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 }
+
 .InputContainer {
   /* display: flex; */
   width: 50vh;
@@ -111,6 +123,7 @@ body {
   background-color: green;
   color: #fff;
 }
+
 .delete {
   border: 1px solid #242424;
   background-color: rgba(255, 0, 0, 0.686);
@@ -122,16 +135,19 @@ body {
   width: 100%;
   color: #fff;
 }
+
 .search-header {
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 70%;
 }
-.search-header > .btn {
+
+.search-header>.btn {
   position: absolute;
   right: 0;
 }
+
 @media only screen and (max-width: 851px) {
   .search-header {
     display: flex;
@@ -140,6 +156,7 @@ body {
     min-width: 70%;
   }
 }
+
 .search-bar {
   min-width: 50%;
   padding: 8px;
@@ -155,14 +172,17 @@ body {
   padding: 8px 10px;
   border: none;
 }
+
 .search-button:active {
   background-color: #303f9f64;
 }
+
 select {
   height: 30px;
   width: 100%;
   color: #fff;
 }
+
 .Container select option {
   margin: 40px;
   background: #b7b7d5;
@@ -176,13 +196,16 @@ select {
   box-shadow: none;
   border-color: #dddddd;
 }
+
 span {
   font-size: 13px;
   display: block;
 }
+
 .InputContainer div {
   margin-bottom: 10px;
 }
+
 .Container input {
   background-color: transparent;
   border: 1px solid rgba(254, 254, 254, 0.3);
@@ -190,6 +213,7 @@ span {
   padding: 0 8px;
   font-size: 14px;
 }
+
 select {
   background-color: transparent;
   border: 1px solid rgba(254, 254, 254, 0.3);
@@ -202,11 +226,13 @@ select {
 .material-icons.md-18 {
   font-size: 18px;
 }
+
 .btnArrange {
   margin: 0;
   display: flex;
   justify-content: center;
 }
+
 .nav-menu {
   display: flex;
   flex-direction: column;
@@ -222,6 +248,7 @@ select {
   opacity: 1;
   transition: all 0.5s ease-in;
 }
+
 .nav-menu.active {
   background: #2c3b46;
   left: 0;
@@ -233,17 +260,21 @@ select {
   font-weight: bold;
   text-transform: uppercase;
 }
-.Table > ul li {
+
+.Table>ul li {
   margin-top: 30px;
   cursor: pointer;
 }
+
 .searchBar {
   justify-content: flex-end;
   margin-left: 10px;
 }
+
 label {
   margin-left: 10px;
 }
+
 .profileContainer {
   width: fit-content;
   height: fit-content;
@@ -260,28 +291,34 @@ label {
     "Lucida Sans", Arial, sans-serif;
   margin: 10px auto;
 }
+
 .profileContainer i {
   margin: 0 15px;
   color: #808080;
 }
-.imageContainer:hover > .profile_info_iner {
+
+.imageContainer:hover>.profile_info_iner {
   opacity: 1;
   visibility: visible;
   top: 77px;
 }
+
 .profile_info_iner {
   opacity: 1;
   visibility: visible;
   top: 77px;
 }
+
 .profileContainer img {
   width: 42px;
   height: 42px;
 }
+
 .profileContainer p {
   font-size: 1rem;
   margin: 0;
 }
+
 .profile_info_iner {
   position: absolute;
   right: 0;
@@ -298,6 +335,7 @@ label {
   z-index: 20;
   cursor: pointer;
 }
+
 .profile_info_iner::before {
   position: absolute;
   content: "";
@@ -310,16 +348,19 @@ label {
   border-color: transparent transparent #567aed transparent;
   z-index: 19;
 }
+
 .profile_info_iner p {
   font-size: 16px;
   font-weight: 400;
   color: #fff;
 }
+
 .profile_info_iner h5 {
   font-size: 20px;
   color: #fff;
   font-weight: 600;
 }
+
 .profile_info_iner a {
   color: #2e4765;
   font-size: 14px;
@@ -328,25 +369,31 @@ label {
   font-weight: 400;
   text-decoration: none;
 }
+
 .profile_author_name {
   padding: 20px 25px;
   background: #567aed;
   border-radius: 10px 15px 0 0;
 }
+
 .profile_info_details {
   padding: 20px 25px;
 }
+
 hr {
   background-color: #676e73;
 }
+
 .IconTitle {
   display: flex;
   height: 100%;
 }
+
 .sideBarDiv {
   margin: 0;
   padding: 0;
 }
+
 .breadcrumps {
   position: absolute;
   left: 40px;

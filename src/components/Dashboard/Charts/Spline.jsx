@@ -14,10 +14,10 @@ const Spline = ({ titles }) => {
             <p className={styles.text}>Manage Your Processes</p>
           </>
         )}
-        {titles === "Sub-Processes" && (
+        {titles === "Sub-Processes / Districts" && (
           <>
-            <p className={styles.title}>Sub-Processes</p>
-            <p className={styles.text}>Manage Your Sub-Processes</p>
+            <p className={styles.title}>Sub-Processes / Districts</p>
+            <p className={styles.text}>Manage Your Sub-Processes / Districts</p>
           </>
         )}
         {titles === "Head Office Teams / Branchs" && (
