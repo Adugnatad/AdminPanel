@@ -471,6 +471,9 @@ const MTable = () => {
                     KPI Target
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell}>
+                    KPI Rating Out of
+                  </TableCell>
+                  <TableCell className={classes.tableHeaderCell}>
                     KPI Unit of Measurement
                   </TableCell>
                   <TableCell colSpan={2} className={classes.tableHeaderCell}>
@@ -654,6 +657,9 @@ const MTable = () => {
                           {kpi.kpi_unit_measurement === "Percentage"
                             ? (parseFloat(kpi.kpi_target) * 100) % 1 !== 0 ? (parseFloat(kpi.kpi_target) * 100)?.toFixed(3) : (parseFloat(kpi.kpi_target) * 100)
                             : (kpi.kpi_target) % 1 !== 0 ? (kpi.kpi_target)?.toFixed(3) : (kpi.kpi_target)}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.out_of}
                         </TableCell>
                         <TableCell className={classes.tableCell}>
                           {kpi.kpi_unit_measurement}

@@ -268,6 +268,9 @@ const EditDept = () => {
             : kpis[index].kpi_q4
           : ""
       );
+      setKpiRatingType(
+          index !== "" ? kpis[index].out_of : ""
+      )
       setKpiUnitMeasurement(
         index !== "" ? kpis[index].kpi_unit_measurement : ""
       );
@@ -568,6 +571,7 @@ const EditDept = () => {
         kpi_q4: kpiQ4Target,
         perspective: ceoPerspectiveId,
         kpi_unit_measurement: kpiUnitMeasurement,
+        out_of: kpiRatingType,
         user: userId,
       };
       console.log(kpi);
@@ -591,6 +595,7 @@ const EditDept = () => {
           setKpiQ4Target("");
           setPerspective("");
           setKpiUnitMeasurement("");
+          setKpiRatingType("");
           HandleSuccess("KPI");
           console.log(data);
         })
@@ -902,6 +907,7 @@ const EditDept = () => {
         kpi_q4: kpiQ4Target,
         perspective: ceoPerspectiveId,
         kpi_unit_measurement: kpiUnitMeasurement,
+        out_of: kpiRatingType,
         user: userId,
       };
       console.log(kpi);
@@ -927,6 +933,7 @@ const EditDept = () => {
           setKpiQ4Target("");
           setPerspective("");
           setKpiUnitMeasurement("");
+          setKpiRatingType("");
           HandleSuccessUpdate("KPI");
         })
         .catch((error) => {
@@ -1630,7 +1637,15 @@ const EditDept = () => {
                   value={kpiQ4Target}
                 />
               </div>
-
+            <div>
+                <span> KPI Rating Out of: </span>
+                <input
+                  id="ratingInput"
+                  type="text"
+                  onChange={(e) => setKpiRatingType(e.target.value)}
+                  value={kpiRatingType}
+                />
+              </div>
               <div>
                 <span> KPI Unit of Measurement: </span>
                 <select
@@ -1655,24 +1670,7 @@ const EditDept = () => {
                   </option>
                 </select>
               </div>
-              <div>
-                <span> KPI Rating Type: </span>
-                <select
-                  id="kpiRating"
-                  value={kpiRatingType}
-                  onChange={(e) => setKpiRatingType(e.target.value)}
-                >
-                  <option key="select" value="select">
-                    Select
-                  </option>
-                  <option key="5" value="5">
-                    5
-                  </option>
-                  <option key="4" value="4">
-                    4
-                  </option>
-                </select>
-              </div>
+        
 
               <div>
                 <span> Perspective: </span>
