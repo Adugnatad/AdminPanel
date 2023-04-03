@@ -93,12 +93,12 @@ const LandingPage = () => {
       setTeamDepartmentId(null);
       setIndividualDepartmentId(null);
     }
-    if (tempRole === "Vice President") {
+    if (tempRole === "VP") {
       setSubdepartmentId(null);
       setTeamDepartmentId(null);
       setIndividualDepartmentId(null);
     }
-    if (tempRole === "director") {
+    if (tempRole === "Director") {
       setTeamDepartmentId(null);
       setIndividualDepartmentId(null);
     }
@@ -117,13 +117,13 @@ const LandingPage = () => {
 
     if (
       e.target.value !== "select" &&
-      (role === "director" || role === "Manager" || role === "Individuals")
+      (role === "Director" || role === "Manager" || role === "Individual")
     ) {
       setSubdepartments(subDepartmentResponse);
     } else {
       setSubdepartments([]);
     }
-    if (role !== "director" && role !== "Manager" && role !== "Individuals") {
+    if (role !== "Director" && role !== "Manager" && role !== "Individual") {
       setSubdepartments([]);
     }
 
@@ -198,19 +198,16 @@ const LandingPage = () => {
 
   const handleNavigate = () => {
     changeUserType(role);
-    if (role !== "Individuals") {
+    if (role !== "Individual") {
       usersList
         .filter((user) =>
           role !== "President"
             ? user.department === departmentId &&
-            user.subdepartment === subdepartmentId &&
-            user.sub_subdepartment === teamDepartmentId &&
-            user.individuals === individualDepartmentId &&
-            user.role === roleId
-            : user.department === departmentId &&
-            user.subdepartment === subdepartmentId &&
-            user.sub_subdepartment === teamDepartmentId &&
-            user.individuals === individualDepartmentId
+              user.subdepartment === subdepartmentId &&
+              user.sub_subdepartment === teamDepartmentId &&
+              user.individuals === individualDepartmentId &&
+              user.role === roleId
+            : user.role === roleId
         )
         .map((us) => {
           changeUrlKEY(us.id);
@@ -220,7 +217,6 @@ const LandingPage = () => {
           const path = "/dashboard";
           navigate(path);
         });
-
       HandleError();
     } else if (userId === "") {
       HandleError();
@@ -281,9 +277,9 @@ const LandingPage = () => {
               </div>
             )}
 
-          {(role === "director" ||
+          {(role === "Director" ||
             role === "Manager" ||
-            role === "Individuals") &&
+            role === "Individual") &&
             department !== "" &&
             department !== "select" && (
               <div className="cta">
@@ -304,7 +300,7 @@ const LandingPage = () => {
               </div>
             )}
 
-          {(role === "Manager" || role === "Individuals") &&
+          {(role === "Manager" || role === "Individual") &&
             subdepartment !== "select" &&
             subdepartment !== "" && (
               <div className="cta">
@@ -327,7 +323,7 @@ const LandingPage = () => {
               </div>
             )}
 
-          {role === "Individuals" &&
+          {role === "Individual" &&
             subdepartment !== "select" &&
             subdepartment !== "" &&
             teamDepartment !== "select" &&
@@ -353,7 +349,7 @@ const LandingPage = () => {
               </div>
             )}
 
-          {role === "Individuals" &&
+          {role === "Individual" &&
             subdepartment !== "select" &&
             subdepartment !== "" &&
             teamDepartment !== "select" &&

@@ -46,6 +46,7 @@ const EditDept = () => {
   const [perspectiveWeight, setPerspectiveWeight] = useState("");
   const [objectiveWeight, setObjectiveWeight] = useState("");
   const [kpiUnitMeasurement, setKpiUnitMeasurement] = useState("");
+  const [kpiRatingType, setKpiRatingType] = useState("");
   const [pageType, setPageType] = useState(location.state.page);
   const [ceoPerspective, setCeoPerspective] = useState([]);
   const [ceoPerspectiveId, setCeoPerspectiveId] = useState("");
@@ -995,7 +996,7 @@ const EditDept = () => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      onClose: () => navigate(-1),
+      onClose: name !== "User" ? () => navigate(-1) : () => setTimeout (window.location.reload(), 2000),
     });
   };
 
@@ -1350,7 +1351,7 @@ const EditDept = () => {
                 </select>
               </div>
 
-              {role === "Vice President" && (
+              {role === "VP" && (
                 <>
                   <div>
                     <span> Process: </span>
@@ -1372,7 +1373,7 @@ const EditDept = () => {
                 </>
               )}
 
-              {role === "director" && (
+              {role === "Director" && (
                 <>
                   <div>
                     <span> Process: </span>
@@ -1474,7 +1475,7 @@ const EditDept = () => {
                   </div>
                 </>
               )}
-              {role === "Individuals" && (
+              {role === "Individual" && (
                 <>
                   <div>
                     <span> Process: </span>
@@ -1573,7 +1574,7 @@ const EditDept = () => {
           )}
 
           {DashboardPage === "kpi" && (
-            <div className="InputFields">
+            <div>
               <div>
                 <span> KPI Name: </span>
                 <input
@@ -1651,6 +1652,24 @@ const EditDept = () => {
                   </option>
                   <option key="USD" value="USD">
                     USD
+                  </option>
+                </select>
+              </div>
+              <div>
+                <span> KPI Rating Type: </span>
+                <select
+                  id="kpiRating"
+                  value={kpiRatingType}
+                  onChange={(e) => setKpiRatingType(e.target.value)}
+                >
+                  <option key="select" value="select">
+                    Select
+                  </option>
+                  <option key="5" value="5">
+                    5
+                  </option>
+                  <option key="4" value="4">
+                    4
                   </option>
                 </select>
               </div>

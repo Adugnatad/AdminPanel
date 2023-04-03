@@ -11,6 +11,7 @@ import loader from "../../resources/images/loader.gif";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import {CgPassword} from 'react-icons/cg';
 import { ToastContainer, toast } from "react-toastify/dist/react-toastify";
 import axios from "axios";
 import {
@@ -27,6 +28,7 @@ import {
 } from "@material-ui/core";
 import { useEffect } from "react";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -34,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tableContainer: {
     borderRadius: 15,
-    // flex: "1",
+    minHeight: "100vh",
     margin: "10px 10px",
     maxWidth: 1250,
     maxHeight: "fit-content",
@@ -68,6 +70,8 @@ const MTable = () => {
   const [perspectives, setPerspective] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [deleted, setDeleted] = useState(null);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [userId, setUserId] = useState(null);
   const {
     usedepartments,
     useSubDepartments,
@@ -131,6 +135,32 @@ const MTable = () => {
       });
 
   };
+  const changePassword = (newPassword) => {
+    axios.put(`http://10.1.177.61:5003/core/change_password/${userId}/`, {
+      "password": newPassword,
+    })
+    .then((res) => {
+     
+      toast.success("Password successfully updated!", {
+        position: toast.POSITION.TOP_RIGHT,
+        onClose: () => {
+          setShowPasswordModal(false);
+        }
+      });
+    
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error("password change failed!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    });
+    console.log(newPassword);
+
+  }
+  const onRequestClose = () => {
+    setShowPasswordModal(false);
+  }
   const handleAdd = () => {
     let path = "/Edit";
     navigate(path, {
@@ -395,6 +425,9 @@ const MTable = () => {
                   <TableCell className={classes.tableHeaderCell}>
                     Manage
                   </TableCell>
+                  <TableCell  className={classes.tableHeaderCell}>
+                    Change Password
+                  </TableCell>
                 </TableRow>
               )}
               {Dashboardpage === "persp" && (
@@ -634,15 +667,25 @@ const MTable = () => {
                         <ModeEditOutlinedIcon />
                       </button>
                     </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {Dashboardpage === "kpi" && (
+                    {Dashboardpage === "kpi" &&   <TableCell className={classes.tableCell}>
+                     
                         <button
                           className="btn edit"
                           onClick={() => { handleDelete(kpi.kpi_id) }}>
                           <DeleteForeverIcon />
                         </button>
-                      )}
                     </TableCell>
+                      }
+                
+                      {Dashboardpage === "user" && 
+                    <TableCell className={classes.tableCell}>
+                        <button
+                          className="btn edit"
+                          onClick={() => {setShowPasswordModal(true); setUserId(kpi.id)}}>
+                          <CgPassword />
+                        </button>
+                    </TableCell>
+                      }
                   </TableRow>
                 ))}
             </TableBody>
@@ -674,6 +717,13 @@ const MTable = () => {
         draggable
         pauseOnHover
       />
+      {showPasswordModal &&
+      <ChangePasswordModal
+      isOpen={showPasswordModal}
+      onRequestClose={onRequestClose}
+      onSubmit={changePassword}
+        />
+      }
     </div>
   );
 };

@@ -95,27 +95,23 @@ body {
 .Container {
   display: flex;
   flex: 1;
+  min-height: 100vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 50px 0;
-  height: 100vh;
   background-color: #304b62;
   color: #fff;
 }
 
 .header {
-  margin-top: 50px 0;
   font-size: 2rem;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 }
 
 .InputContainer {
-  /* display: flex; */
   width: 50vh;
-  /* margin-top: 50px; */
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .saveadd {

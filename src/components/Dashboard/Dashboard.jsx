@@ -75,6 +75,7 @@ const Dashboard = () => {
         console.log(error);
       });
   }, []);
+  
 
   const handleDepartment = () => {
     navigate("/dept", { state: { page: "dept" } });
