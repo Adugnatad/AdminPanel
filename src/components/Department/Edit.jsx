@@ -268,9 +268,7 @@ const EditDept = () => {
             : kpis[index].kpi_q4
           : ""
       );
-      setKpiRatingType(
-          index !== "" ? kpis[index].out_of : ""
-      )
+      setKpiRatingType(index !== "" ? kpis[index].out_of : "");
       setKpiUnitMeasurement(
         index !== "" ? kpis[index].kpi_unit_measurement : ""
       );
@@ -293,7 +291,6 @@ const EditDept = () => {
   //   })
   // }, [perspective])
 
-
   // useEffect(() => {
   //   setObjExists(false);
   //   useObjectives.map((objec) => {
@@ -302,7 +299,6 @@ const EditDept = () => {
   //     }
   //   })
   // }, [objective])
-
 
   const handleAdd = () => {
     if (DashboardPage === "dept") {
@@ -467,7 +463,17 @@ const EditDept = () => {
           setIndividualDepartment("");
           HandleSuccess("User");
           console.log(data);
-          addUsers(data.user.id, data.user.first_name, data.user.last_name, data.user.username, data.user.role, data.user.department, data.user.subdepartment, data.user.sub_subdepartment, data.user.is_active);
+          addUsers(
+            data.user.id,
+            data.user.first_name,
+            data.user.last_name,
+            data.user.username,
+            data.user.role,
+            data.user.department,
+            data.user.subdepartment,
+            data.user.sub_subdepartment,
+            data.user.is_active
+          );
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -494,10 +500,7 @@ const EditDept = () => {
       {
         // !perspectiveExists && axios
         axios
-          .post(
-            `http://10.1.177.61:5003/bsc/perspective/${urlKEY}/`,
-            persp
-          )
+          .post(`http://10.1.177.61:5003/bsc/perspective/${urlKEY}/`, persp)
           .then((res) => {
             const data = res.data;
             if (res.status !== 201) {
@@ -534,10 +537,7 @@ const EditDept = () => {
       {
         // !objExists && axios
         axios
-          .post(
-            `http://10.1.177.61:5003/bsc/objective/${urlKEY}/`,
-            objects
-          )
+          .post(`http://10.1.177.61:5003/bsc/objective/${urlKEY}/`, objects)
           .then((res) => {
             const data = res.data;
             if (res.status !== 201) {
@@ -678,10 +678,7 @@ const EditDept = () => {
         subdepartment: subDepartmentId,
       };
       axios
-        .put(
-          `http://10.1.177.61:5003/core/subsub/${kpis[index].id}/`,
-          teamDept
-        )
+        .put(`http://10.1.177.61:5003/core/subsub/${kpis[index].id}/`, teamDept)
         .then((res) => {
           const data = res.data;
           if (res.status !== 200) {
@@ -782,10 +779,7 @@ const EditDept = () => {
       };
       console.log(user);
       axios
-        .put(
-          `http://10.1.177.61:5003/core/user/${kpis[index].id}/`,
-          user
-        )
+        .put(`http://10.1.177.61:5003/core/user/${kpis[index].id}/`, user)
         .then((res) => {
           const data = res.data;
           if (res.status !== 200) {
@@ -812,7 +806,17 @@ const EditDept = () => {
           const subdepartment = data.subdepartment;
           const sub_subdepartment = data.sub_subdepartment;
           const is_active = data.is_active;
-          updateUsers(id, { id, first_name, last_name, username, role, department, subdepartment, sub_subdepartment, is_active })
+          updateUsers(id, {
+            id,
+            first_name,
+            last_name,
+            username,
+            role,
+            department,
+            subdepartment,
+            sub_subdepartment,
+            is_active,
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -912,10 +916,7 @@ const EditDept = () => {
       };
       console.log(kpi);
       axios
-        .put(
-          `http://10.1.177.61:5003/bsc/kpi/${kpis[index].kpi_id}/`,
-          kpi
-        )
+        .put(`http://10.1.177.61:5003/bsc/kpi/${kpis[index].kpi_id}/`, kpi)
         .then((res) => {
           const data = res.data;
           if (res.status !== 200) {
@@ -971,8 +972,7 @@ const EditDept = () => {
       toast.error("Please check your network and try again", {
         position: toast.POSITION.TOP_RIGHT,
       });
-    }
-    else if (type === "duplicate") {
+    } else if (type === "duplicate") {
       toast.error("Already exists", {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -1003,7 +1003,10 @@ const EditDept = () => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      onClose: name !== "User" ? () => navigate(-1) : () => setTimeout (window.location.reload(), 2000),
+      onClose:
+        name !== "User"
+          ? () => navigate(-1)
+          : () => setTimeout(window.location.reload(), 2000),
     });
   };
 
@@ -1120,50 +1123,50 @@ const EditDept = () => {
         {pageType !== "ADD" && DashboardPage === "dept"
           ? "Edit Process"
           : DashboardPage === "dept"
-            ? "Add Process"
-            : null}
+          ? "Add Process"
+          : null}
         {pageType !== "ADD" && DashboardPage === "subDept"
           ? "Edit Sub-Process"
           : DashboardPage === "subDept"
-            ? "Add Sub-Process"
-            : null}
+          ? "Add Sub-Process"
+          : null}
         {pageType !== "ADD" && DashboardPage === "sub-subDept"
           ? "Edit Head Office Team / Branch"
           : DashboardPage === "sub-subDept"
-            ? "Add Head Office Team / Branch"
-            : null}
+          ? "Add Head Office Team / Branch"
+          : null}
         {pageType !== "ADD" && DashboardPage === "individualDep"
           ? "Edit Position"
           : DashboardPage === "individualDep"
-            ? "Add Position"
-            : null}
+          ? "Add Position"
+          : null}
         {pageType !== "ADD" && DashboardPage === "user"
           ? "Edit User"
           : DashboardPage === "user"
-            ? "Add User"
-            : null}
+          ? "Add User"
+          : null}
         {pageType !== "ADD" && DashboardPage === "role"
           ? "Edit Role"
           : DashboardPage === "role"
-            ? "Add Role"
-            : null}
+          ? "Add Role"
+          : null}
         {pageType !== "ADD" && DashboardPage === "obj"
           ? "Edit Objective"
           : DashboardPage === "obj"
-            ? "Add Objective"
-            : null}
+          ? "Add Objective"
+          : null}
         {pageType !== "ADD" && DashboardPage === "persp"
           ? "Edit Perspective"
           : DashboardPage === "persp"
-            ? "Add Perspective"
-            : null}
+          ? "Add Perspective"
+          : null}
 
         <div>
           {pageType !== "ADD" && DashboardPage === "kpi"
             ? "Edit KPI"
             : DashboardPage === "kpi"
-              ? "Add KPI"
-              : null}
+            ? "Add KPI"
+            : null}
         </div>
       </div>
 
@@ -1380,7 +1383,7 @@ const EditDept = () => {
                 </>
               )}
 
-              {role === "Director" && (
+              {(role === "Director" || role === "Senior Director") && (
                 <>
                   <div>
                     <span> Process: </span>
@@ -1421,7 +1424,7 @@ const EditDept = () => {
                   </div>
                 </>
               )}
-              {role === "Manager" && (
+              {(role === "Manager" || role === "Senior Manager") && (
                 <>
                   <div>
                     <span> Process: </span>
@@ -1637,7 +1640,7 @@ const EditDept = () => {
                   value={kpiQ4Target}
                 />
               </div>
-            <div>
+              <div>
                 <span> KPI Rating Out of: </span>
                 <input
                   id="ratingInput"
@@ -1670,7 +1673,6 @@ const EditDept = () => {
                   </option>
                 </select>
               </div>
-        
 
               <div>
                 <span> Perspective: </span>
