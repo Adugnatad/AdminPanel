@@ -10,8 +10,8 @@ import { useAPI } from "../../Context/APIContext";
 import loader from "../../resources/images/loader.gif";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import {CgPassword} from 'react-icons/cg';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { CgPassword } from "react-icons/cg";
 import { ToastContainer, toast } from "react-toastify/dist/react-toastify";
 import axios from "axios";
 import {
@@ -108,9 +108,15 @@ const MTable = () => {
     });
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, item) => {
     axios
-      .delete(`http://10.1.177.61:5003/bsc/kpi/${id}/`)
+      .delete(
+        item === "kpi"
+          ? `http://10.1.177.61:5003/bsc/kpi/${id}/`
+          : item === "perspective"
+          ? `http://10.1.177.61:5003/bsc/perspective/${id}/`
+          : `http://10.1.177.61:5003/bsc/objective/${id}/`
+      )
       .then((res) => {
         const data = res.data;
         if (res.status !== 204) {
@@ -118,12 +124,19 @@ const MTable = () => {
           const error = (data && data.message) || res.status;
           return Promise.reject(error);
         }
-        toast.success("Kpi is deleted!", {
-          position: toast.POSITION.TOP_RIGHT,
-          onClose: () => {
-            setDeleted(!deleted);
+        toast.success(
+          item === "kpi"
+            ? "Kpi is deleted!"
+            : item === "perspective"
+            ? "perspective is deleted!"
+            : "Objective is deleted!",
+          {
+            position: toast.POSITION.TOP_RIGHT,
+            onClose: () => {
+              setDeleted(!deleted);
+            },
           }
-        });
+        );
         console.log(data);
         // updateKpi(dept_id, { dept_id, dept_name });
       })
@@ -133,34 +146,31 @@ const MTable = () => {
           position: toast.POSITION.TOP_RIGHT,
         });
       });
-
   };
   const changePassword = (newPassword) => {
-    axios.put(`http://10.1.177.61:5003/core/change_password/${userId}/`, {
-      "password": newPassword,
-    })
-    .then((res) => {
-     
-      toast.success("Password successfully updated!", {
-        position: toast.POSITION.TOP_RIGHT,
-        onClose: () => {
-          setShowPasswordModal(false);
-        }
+    axios
+      .put(`http://10.1.177.61:5003/core/change_password/${userId}/`, {
+        password: newPassword,
+      })
+      .then((res) => {
+        toast.success("Password successfully updated!", {
+          position: toast.POSITION.TOP_RIGHT,
+          onClose: () => {
+            setShowPasswordModal(false);
+          },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("password change failed!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       });
-    
-    })
-    .catch((error) => {
-      console.log(error);
-      toast.error("password change failed!", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    });
     console.log(newPassword);
-
-  }
+  };
   const onRequestClose = () => {
     setShowPasswordModal(false);
-  }
+  };
   const handleAdd = () => {
     let path = "/Edit";
     navigate(path, {
@@ -425,7 +435,7 @@ const MTable = () => {
                   <TableCell className={classes.tableHeaderCell}>
                     Manage
                   </TableCell>
-                  <TableCell  className={classes.tableHeaderCell}>
+                  <TableCell className={classes.tableHeaderCell}>
                     Change Password
                   </TableCell>
                 </TableRow>
@@ -438,7 +448,7 @@ const MTable = () => {
                   <TableCell className={classes.tableHeaderCell}>
                     Perspective Weight
                   </TableCell>
-                  <TableCell className={classes.tableHeaderCell}>
+                  <TableCell colSpan={2} className={classes.tableHeaderCell}>
                     Manage
                   </TableCell>
                 </TableRow>
@@ -454,7 +464,7 @@ const MTable = () => {
                   <TableCell className={classes.tableHeaderCell}>
                     Perspective
                   </TableCell>
-                  <TableCell className={classes.tableHeaderCell}>
+                  <TableCell colSpan={2} className={classes.tableHeaderCell}>
                     Manage
                   </TableCell>
                 </TableRow>
@@ -488,11 +498,9 @@ const MTable = () => {
                 .map((kpi, index) => (
                   <TableRow key={index}>
                     {Dashboardpage === "dept" && (
-
                       <TableCell className={classes.tableCell}>
                         {kpi.dept_name} Hello
                       </TableCell>
-
                     )}
                     {Dashboardpage === "subDept" && (
                       <>
@@ -557,8 +565,11 @@ const MTable = () => {
                           {kpi.perspective_name}
                         </TableCell>
                         <TableCell className={classes.tableCell}>
-                          {(parseFloat(kpi.perspective_weight) * 100) % 1 !== 0 ? (parseFloat(kpi.perspective_weight) * 100)?.toFixed(3) : (parseFloat(kpi.perspective_weight) * 100)}
-
+                          {(parseFloat(kpi.perspective_weight) * 100) % 1 !== 0
+                            ? (
+                                parseFloat(kpi.perspective_weight) * 100
+                              )?.toFixed(3)
+                            : parseFloat(kpi.perspective_weight) * 100}
                         </TableCell>
                         {/* <TableCell className={classes.tableCell}>
                           {useUsers &&
@@ -581,18 +592,18 @@ const MTable = () => {
                           {kpi.last_name}
                         </TableCell>
                         <TableCell className={classes.tableCell}>
-                          {useroles && useroles.length > 0
-                            && useroles
+                          {useroles &&
+                            useroles.length > 0 &&
+                            useroles
                               .filter((role) => role.role_id === kpi.role)
-                              .map((ro) => ro.role_name)
-                          }
+                              .map((ro) => ro.role_name)}
                         </TableCell>
 
                         <TableCell className={classes.tableCell}>
                           {usedepartments && usedepartments.length > 0
                             ? usedepartments
-                              .filter((dep) => dep.dept_id === kpi.department)
-                              .map((department) => department.dept_name)
+                                .filter((dep) => dep.dept_id === kpi.department)
+                                .map((department) => department.dept_name)
                             : ""}
                         </TableCell>
                         <TableCell className={classes.tableCell}>
@@ -631,7 +642,11 @@ const MTable = () => {
                           {kpi.objective_name}
                         </TableCell>
                         <TableCell className={classes.tableCell}>
-                          {(parseFloat(kpi.objective_weight) * 100) % 1 !== 0 ? (parseFloat(kpi.objective_weight) * 100)?.toFixed(3) : (parseFloat(kpi.objective_weight) * 100)}
+                          {(parseFloat(kpi.objective_weight) * 100) % 1 !== 0
+                            ? (parseFloat(kpi.objective_weight) * 100)?.toFixed(
+                                3
+                              )
+                            : parseFloat(kpi.objective_weight) * 100}
                         </TableCell>
                         <TableCell className={classes.tableCell} key={index}>
                           {perspectives &&
@@ -655,8 +670,12 @@ const MTable = () => {
                         </TableCell>
                         <TableCell className={classes.tableCell}>
                           {kpi.kpi_unit_measurement === "Percentage"
-                            ? (parseFloat(kpi.kpi_target) * 100) % 1 !== 0 ? (parseFloat(kpi.kpi_target) * 100)?.toFixed(3) : (parseFloat(kpi.kpi_target) * 100)
-                            : (kpi.kpi_target) % 1 !== 0 ? (kpi.kpi_target)?.toFixed(3) : (kpi.kpi_target)}
+                            ? (parseFloat(kpi.kpi_target) * 100) % 1 !== 0
+                              ? (parseFloat(kpi.kpi_target) * 100)?.toFixed(3)
+                              : parseFloat(kpi.kpi_target) * 100
+                            : kpi.kpi_target % 1 !== 0
+                            ? kpi.kpi_target?.toFixed(3)
+                            : kpi.kpi_target}
                         </TableCell>
                         <TableCell className={classes.tableCell}>
                           {kpi.out_of}
@@ -669,29 +688,50 @@ const MTable = () => {
                     <TableCell className={classes.tableCell}>
                       <button
                         className="btn edit"
-                        onClick={() => editPage(page * rowsPerPage + index)}>
+                        onClick={() => editPage(page * rowsPerPage + index)}
+                      >
                         <ModeEditOutlinedIcon />
                       </button>
                     </TableCell>
-                    {Dashboardpage === "kpi" &&   <TableCell className={classes.tableCell}>
-                     
+                    {(Dashboardpage === "kpi" ||
+                      Dashboardpage === "persp" ||
+                      Dashboardpage === "obj") && (
+                      <TableCell className={classes.tableCell}>
                         <button
                           className="btn edit"
-                          onClick={() => { handleDelete(kpi.kpi_id) }}>
+                          onClick={() => {
+                            handleDelete(
+                              Dashboardpage === "kpi"
+                                ? kpi.kpi_id
+                                : Dashboardpage === "persp"
+                                ? kpi.perspective_id
+                                : kpi.objective_id,
+                              Dashboardpage === "kpi"
+                                ? "kpi"
+                                : Dashboardpage === "persp"
+                                ? "perspective"
+                                : "objective"
+                            );
+                          }}
+                        >
                           <DeleteForeverIcon />
                         </button>
-                    </TableCell>
-                      }
-                
-                      {Dashboardpage === "user" && 
-                    <TableCell className={classes.tableCell}>
+                      </TableCell>
+                    )}
+
+                    {Dashboardpage === "user" && (
+                      <TableCell className={classes.tableCell}>
                         <button
                           className="btn edit"
-                          onClick={() => {setShowPasswordModal(true); setUserId(kpi.id)}}>
+                          onClick={() => {
+                            setShowPasswordModal(true);
+                            setUserId(kpi.id);
+                          }}
+                        >
                           <CgPassword />
                         </button>
-                    </TableCell>
-                      }
+                      </TableCell>
+                    )}
                   </TableRow>
                 ))}
             </TableBody>
@@ -708,9 +748,7 @@ const MTable = () => {
               </TableRow>
             </TableFooter>
           </Table>
-
         </TableContainer>
-
       </>
       <ToastContainer
         position="top-right"
@@ -723,13 +761,13 @@ const MTable = () => {
         draggable
         pauseOnHover
       />
-      {showPasswordModal &&
-      <ChangePasswordModal
-      isOpen={showPasswordModal}
-      onRequestClose={onRequestClose}
-      onSubmit={changePassword}
+      {showPasswordModal && (
+        <ChangePasswordModal
+          isOpen={showPasswordModal}
+          onRequestClose={onRequestClose}
+          onSubmit={changePassword}
         />
-      }
+      )}
     </div>
   );
 };
