@@ -98,11 +98,11 @@ const LandingPage = () => {
       setTeamDepartmentId(null);
       setIndividualDepartmentId(null);
     }
-    if (tempRole === "Director") {
+    if (tempRole === "Director" || tempRole === "Senior Director") {
       setTeamDepartmentId(null);
       setIndividualDepartmentId(null);
     }
-    if (tempRole === "Manager") {
+    if (tempRole === "Manager" || tempRole === "Senior Manager") {
       setIndividualDepartmentId(null);
     }
   };
@@ -117,13 +117,23 @@ const LandingPage = () => {
 
     if (
       e.target.value !== "select" &&
-      (role === "Director" || role === "Manager" || role === "Individual")
+      (role === "Director" ||
+        role === "Senior Director" ||
+        role === "Manager" ||
+        role === "Senior Manager" ||
+        role === "Individual")
     ) {
       setSubdepartments(subDepartmentResponse);
     } else {
       setSubdepartments([]);
     }
-    if (role !== "Director" && role !== "Manager" && role !== "Individual") {
+    if (
+      role !== "Director" &&
+      role !== "Manager" &&
+      role !== "Senior Manager" &&
+      role !== "Senior Director" &&
+      role !== "Individual"
+    ) {
       setSubdepartments([]);
     }
 
@@ -278,7 +288,9 @@ const LandingPage = () => {
             )}
 
           {(role === "Director" ||
+            role === "Senior Director" ||
             role === "Manager" ||
+            role === "Senior Manager" ||
             role === "Individual") &&
             department !== "" &&
             department !== "select" && (
@@ -300,7 +312,9 @@ const LandingPage = () => {
               </div>
             )}
 
-          {(role === "Manager" || role === "Individual") &&
+          {(role === "Manager" ||
+            role === "Senior Manager" ||
+            role === "Individual") &&
             subdepartment !== "select" &&
             subdepartment !== "" && (
               <div className="cta">
